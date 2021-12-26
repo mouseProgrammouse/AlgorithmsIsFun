@@ -41,12 +41,8 @@ const merge = (leftArray, rightArray) => {
     }
 
     // add rest of the arrays into result
-    if (i < leftArray.length) {
-        result = result.concat(leftArray.slice(i));
-    }
-    if (j < rightArray.length) {
-        result = result.concat(rightArray.slice(j));
-    }
+    result = result.concat(leftArray.slice(i));
+    result = result.concat(rightArray.slice(j));
     return result;
 };
 
