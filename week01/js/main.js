@@ -14,7 +14,6 @@ submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
     const unsortedArrInput = document.getElementById('unsortedArr');
 
-    console.log(unsortedArrInput.value);
     if (unsortedArrInput.value) {
         showErrorMsg(''); // remove error msg
         let unsortedArr = convertStrIntoArrayOfInts(unsortedArrInput.value);

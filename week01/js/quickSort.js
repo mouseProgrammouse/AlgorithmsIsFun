@@ -1,7 +1,10 @@
 /**
  * Quick Sort implementation.
+ * Complexity is O(n*log(n)) if we choose a mdeia pivot.
  * 
- * Complexity is O(n*log(n))
+ * @param {Array} unsortedArray array to sort
+ * @param {int} lowerBound lover boud of sorted part
+ * @param {int} upperBound upper bound of sorted part
  */
 export const quickSort = (unsortedArray, lowerBound, upperBound) => {
     if (lowerBound >= upperBound) {
@@ -9,7 +12,14 @@ export const quickSort = (unsortedArray, lowerBound, upperBound) => {
     }
 
     // choose a pivot elem
-    const pivot = unsortedArray[lowerBound]; // first element
+    //const pivot = unsortedArray[lowerBound]; // first element ( Naive implementation) 
+    const pivot = unsortedArray[getRandomIndex(upperBound, lowerBound)];
+    /*
+    The best scenarion if we choose the median pivot (media that pivot, 
+    50% of array is in the left side, and 50% of array in the right side).
+
+    Also we can use a magic of the random :)
+     */
     // partioning (rearange) by using swaps
     let start = lowerBound,
         end = upperBound;
@@ -36,6 +46,15 @@ export const quickSort = (unsortedArray, lowerBound, upperBound) => {
     quickSort(unsortedArray, lowerBound, end);
     // rearange right
     quickSort(unsortedArray, start, upperBound);
+};
+
+/**
+ * Get a random index in ceratin range (lowerBound - upperBound).
+ * @param {int} lowerBound min value
+ * @param {int} upperBound max value
+ */
+const getRandomIndex = (lowerBound, upperBound) => {
+    return Math.floor(Math.random() * (upperBound - lowerBound) + lowerBound);
 };
 
 export default { quickSort };
