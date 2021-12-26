@@ -1,11 +1,13 @@
 import { sort } from "./mergeSort.js";
 import { countInversionsBruteForse, countInversionsMergeSort } from "./divideAndConquer.js";
+import { quickSort } from "./quickSort.js";
 
 const submitBtn = document.getElementById('mergeSort');
 const IDs = {
     sort: "sortResult",
     divideBF: "divideAndCBrutForseResult",
-    divide: "divideAndCResult"
+    divide: "divideAndCResult",
+    quickSort: "quickSortResult"
 }
 
 submitBtn.addEventListener('click', (e) => {
@@ -15,13 +17,18 @@ submitBtn.addEventListener('click', (e) => {
     console.log(unsortedArrInput.value);
     if (unsortedArrInput.value) {
         showErrorMsg(''); // remove error msg
-        const unsortedArr = convertStrIntoArrayOfInts(unsortedArrInput.value);
+        let unsortedArr = convertStrIntoArrayOfInts(unsortedArrInput.value);
         // merge sort
         showResultMsg(IDs.sort, `Merge Sort result: ${sort(unsortedArr)}`);
 
         // inversion counting in array
         showResultMsg(IDs.divideBF, `Brute Forse solution result: ${countInversionsBruteForse(unsortedArr)}`);
         showResultMsg(IDs.divide, `Merge Sort solution result: ${countInversionsMergeSort(unsortedArr)}`);
+
+        // quick sort (for quick sort we will not copy array to avoid memory allocation)
+        quickSort(unsortedArr, 0, unsortedArr.length - 1);
+        showResultMsg(IDs.quickSort, `Result of Quick sort: ${unsortedArr}`);
+
     } else {
         showErrorMsg('Please enter the value');
         unsortedArrInput.focus();
