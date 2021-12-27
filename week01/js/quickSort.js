@@ -1,3 +1,4 @@
+import { getRandomIndex } from './commonUtils.js';
 /**
  * Quick Sort implementation.
  * Complexity is O(n*log(n)) if we choose a mdeia pivot.
@@ -46,15 +47,6 @@ export const quickSort = (unsortedArray, lowerBound, upperBound) => {
     quickSort(unsortedArray, lowerBound, end);
     // rearange right
     quickSort(unsortedArray, start, upperBound);
-};
-
-/**
- * Get a random index in ceratin range (lowerBound - upperBound).
- * @param {int} lowerBound min value
- * @param {int} upperBound max value
- */
-const getRandomIndex = (lowerBound, upperBound) => {
-    return Math.floor(Math.random() * (upperBound - lowerBound) + lowerBound);
 };
 
 export default { quickSort };
