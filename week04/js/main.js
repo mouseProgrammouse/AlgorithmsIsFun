@@ -48,24 +48,54 @@ class BinarySearchTree {
         }
     }
 
+    /***
+     * SEARCH.
+     * O(height). Perfectly balanced O(log(n)).
+     */
+    search(searchingValue) {
+        if (this.root === null) {
+            return "nope :(";
+        }
+        return this._searchNode(this.root, searchingValue);
+    }
+
+
+
+    // - helper functions -
+
+    _searchNode(currNode, searchingValue) {
+        if (currNode === null) {
+            return "nope :(";
+        }
+
+        if (currNode._getData() < searchingValue) {
+            // right
+            return this._searchNode(currNode._getRightChildren(), searchingValue);
+        }
+
+        if (currNode._getData() > searchingValue) {
+            // left
+            return this._searchNode(currNode._getLeftChildren(), searchingValue);
+        }
+
+        return currNode;
+    }
+
     _insertNode(currNode, newNode) {
         if (currNode._getData() > newNode._getData()) {
             const leftChild = currNode._getLeftChildren();
             if (leftChild === null) {
-                currNode._setLeftChildren(newNode);
-                return;
+                return currNode._setLeftChildren(newNode);
             }
             // left child
             this._insertNode(leftChild, newNode);
-        } else {
-            const rightChild = currNode._getRightChildren();
-            if (rightChild === null) {
-                currNode._setRightChildren(newNode);
-                return;
-            }
-            // right child
-            this._insertNode(rightChild, newNode);
         }
+        // check right children
+        const rightChild = currNode._getRightChildren();
+        if (rightChild === null) {
+            return currNode._setRightChildren(newNode);
+        }
+        this._insertNode(rightChild, newNode);
     }
 }
 
@@ -76,3 +106,6 @@ myTree.insert(12);
 myTree.insert(88);
 myTree.insert(2);
 console.log(myTree);
+
+console.log(myTree.search(2));
+console.log(myTree.search(7));
