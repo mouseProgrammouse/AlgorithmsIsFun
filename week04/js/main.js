@@ -32,6 +32,13 @@ class BinarySearchTree {
         this.root = null;
     }
 
+    /**
+     * INSERT.
+     * O(height) - height of the tree is defined as the lenght of
+     * a longest path from ots root to a leaf.
+     * perfectly balanced tree height is log(n).
+     * worst case is (n-1).
+     */
     insert(data) {
         const newNode = new Node(data);
         if (this.root === null) {
