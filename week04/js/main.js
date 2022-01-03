@@ -61,6 +61,7 @@ class BinarySearchTree {
 
     /**
      * MIN.
+     * O(height). Perfectly balanced O(log(n)).
      */
     min() {
         if (this.root === null) {
@@ -68,6 +69,8 @@ class BinarySearchTree {
         }
         return this._minNode(this.root);
     }
+
+
 
     // - helper functions -
 
