@@ -59,9 +59,25 @@ class BinarySearchTree {
         return this._searchNode(this.root, searchingValue);
     }
 
-
+    /**
+     * MIN.
+     */
+    min() {
+        if (this.root === null) {
+            return null;
+        }
+        return this._minNode(this.root);
+    }
 
     // - helper functions -
+
+    _minNode(currNode) {
+        if (currNode._getLeftChildren() === null) {
+            return currNode;
+        }
+
+        return this._minNode(currNode._getLeftChildren());
+    }
 
     _searchNode(currNode, searchingValue) {
         if (currNode === null) {
@@ -107,5 +123,6 @@ myTree.insert(88);
 myTree.insert(2);
 console.log(myTree);
 
-console.log(myTree.search(2));
-console.log(myTree.search(7));
+// console.log(myTree.search(2));
+// console.log(myTree.search(7));
+console.log(myTree.min());
