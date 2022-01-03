@@ -70,7 +70,16 @@ class BinarySearchTree {
         return this._minNode(this.root);
     }
 
-
+    /**
+     * MAX.
+     * O(height). Perfectly balanced O(log(n)).
+     */
+    max() {
+        if (this.root === null) {
+            return null;
+        }
+        return this._maxNode(this.root);
+    }
 
     // - helper functions -
 
@@ -80,6 +89,14 @@ class BinarySearchTree {
         }
 
         return this._minNode(currNode._getLeftChildren());
+    }
+
+    _maxNode(currNode) {
+        if (currNode._getRightChildren() === null) {
+            return currNode;
+        }
+
+        return this._maxNode(currNode._getRightChildren());
     }
 
     _searchNode(currNode, searchingValue) {
@@ -129,3 +146,4 @@ console.log(myTree);
 // console.log(myTree.search(2));
 // console.log(myTree.search(7));
 console.log(myTree.min());
+console.log(myTree.max());
