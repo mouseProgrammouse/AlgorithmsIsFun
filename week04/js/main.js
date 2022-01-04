@@ -4,27 +4,6 @@ class Node {
         this.left = null;
         this.right = null;
     }
-
-    _getData() {
-        return this.data;
-    }
-
-    _getRightChildren() {
-        return this.right;
-    }
-
-    _setRightChildren(newNode) {
-        this.right = newNode;
-    }
-
-    _getLeftChildren() {
-        return this.left;
-    }
-
-    _setLeftChildren(newNode) {
-        this.left = newNode;
-    }
-
 }
 
 class BinarySearchTree {
@@ -81,22 +60,70 @@ class BinarySearchTree {
         return this._maxNode(this.root);
     }
 
+    /**
+     * SUCCESSOR.
+     * O(height). Perfectly balanced O(log(n)).
+     */
+    successor(myNode) {
+        if (myNode.right) {
+            return this._minNode(node.right);
+        }
+
+        let prev = null,
+            cur = this.root;
+
+        while (cur !== myNode) {
+            if (cur.data > myNode.data) {
+                prev = cur;
+                cur = cur.left;
+            } else {
+                cur = cur.right
+            }
+        }
+        return prev;
+    }
+
+    /**
+     * PREDECESSOR.
+     * O(height). Perfectly balanced O(log(n)).
+     */
+    predecessor(myNode) {
+        if (myNode.left) {
+            return this._maxNode(myNode.left);
+        }
+
+        let prev = null,
+            cur = this.root;
+
+        while (cur !== myNode) {
+            if (cur.data > myNode.data) {
+                cur = cur.left;
+            } else {
+                prev = cur;
+                cur = cur.right;
+            }
+        }
+
+        return prev;
+    }
+
+
     // - helper functions -
 
     _minNode(currNode) {
-        if (currNode._getLeftChildren() === null) {
+        if (currNode.left === null) {
             return currNode;
         }
 
-        return this._minNode(currNode._getLeftChildren());
+        return this._minNode(currNode.left);
     }
 
     _maxNode(currNode) {
-        if (currNode._getRightChildren() === null) {
+        if (currNode.right === null) {
             return currNode;
         }
 
-        return this._maxNode(currNode._getRightChildren());
+        return this._maxNode(currNode.right);
     }
 
     _searchNode(currNode, searchingValue) {
@@ -104,46 +131,53 @@ class BinarySearchTree {
             return "nope :(";
         }
 
-        if (currNode._getData() < searchingValue) {
+        if (currNode.data < searchingValue) {
             // right
-            return this._searchNode(currNode._getRightChildren(), searchingValue);
+            return this._searchNode(currNode.right, searchingValue);
         }
 
-        if (currNode._getData() > searchingValue) {
+        if (currNode.data > searchingValue) {
             // left
-            return this._searchNode(currNode._getLeftChildren(), searchingValue);
+            return this._searchNode(currNode.left, searchingValue);
         }
 
         return currNode;
     }
 
     _insertNode(currNode, newNode) {
-        if (currNode._getData() > newNode._getData()) {
-            const leftChild = currNode._getLeftChildren();
+        if (currNode.data > newNode.data) {
+            const leftChild = currNode.left;
             if (leftChild === null) {
-                return currNode._setLeftChildren(newNode);
+                return currNode.left = newNode;
             }
             // left child
-            this._insertNode(leftChild, newNode);
+            return this._insertNode(leftChild, newNode);
         }
         // check right children
-        const rightChild = currNode._getRightChildren();
+        const rightChild = currNode.right;
         if (rightChild === null) {
-            return currNode._setRightChildren(newNode);
+            return currNode.right = newNode;
         }
-        this._insertNode(rightChild, newNode);
+        return this._insertNode(rightChild, newNode);
     }
 }
 
 
 let myTree = new BinarySearchTree();
+myTree.insert(50);
+myTree.insert(16);
+myTree.insert(14);
 myTree.insert(10);
-myTree.insert(12);
-myTree.insert(88);
-myTree.insert(2);
+myTree.insert(15);
+myTree.insert(40);
+myTree.insert(45);
+myTree.insert(35);
+myTree.insert(36);
+myTree.insert(32);
+myTree.insert(37);
 console.log(myTree);
 
 // console.log(myTree.search(2));
 // console.log(myTree.search(7));
 console.log(myTree.min());
-console.log(myTree.max());
+console.log(myTree.predecessor(myTree.search(32)));
