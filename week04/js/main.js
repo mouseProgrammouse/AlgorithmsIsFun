@@ -107,8 +107,40 @@ class BinarySearchTree {
         return prev;
     }
 
+    /**
+     * Delete element.
+     * O(height). Perfectly balanced O(log(n)).
+     */
+    delete(value) {
+        this._deleteNode(this.root, value);
+    }
+
 
     // - helper functions -
+
+    _deleteNode(root, value) {
+        if (root === null) {
+            return null;
+        }
+
+        if (value < root.data) {
+            root.left = this._deleteNode(root.left, value);
+            return root;
+        } else if (value > root.data) {
+            root.right = this._deleteNode(root.right, value);
+            return root;
+        } else {
+            if (!root.left) {
+                return root.right;
+            } else if (!root.right) {
+                return root.left;
+            } else {
+                root.data = this._minNode(root.right).data;
+                root.right = this._deleteNode(root.right, root.data);
+                return root;
+            }
+        }
+    }
 
     _minNode(currNode) {
         if (currNode.left === null) {
@@ -176,8 +208,11 @@ myTree.insert(36);
 myTree.insert(32);
 myTree.insert(37);
 console.log(myTree);
+myTree.delete(16);
+console.log(myTree);
+
 
 // console.log(myTree.search(2));
 // console.log(myTree.search(7));
-console.log(myTree.min());
-console.log(myTree.predecessor(myTree.search(32)));
+//console.log(myTree.min());
+//console.log(myTree.predecessor(myTree.search(32)));
